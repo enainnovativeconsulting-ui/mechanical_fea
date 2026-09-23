@@ -273,6 +273,7 @@ nav.main a:hover{color:#fff;}
 
 /* ===== FOOTER ===== */
 footer.site{background:var(--navy-950); color:var(--steel-300); padding:44px 0 calc(28px + env(safe-area-inset-bottom,0px));}
+@media (max-width:900px){ footer.site{padding-bottom: calc(90px + env(safe-area-inset-bottom,0px));} }
 .footer-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px; margin-bottom:26px;}
 .footer-logo{color:#fff; font-weight:800; font-size:18px; display:flex; align-items:center; gap:9px;}
 .footer-contact{display:flex; gap:22px; flex-wrap:wrap; font-size:13.5px;}
@@ -293,10 +294,12 @@ footer.site{background:var(--navy-950); color:var(--steel-300); padding:44px 0 c
 
 .sticky-mobile{
   display:none; position:fixed; left:0; right:0; bottom:0; z-index:70; background:var(--navy-950);
-  padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px)); border-top:1px solid rgba(255,255,255,.12);
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px)); border-top:1px solid rgba(255,255,255,.12);
   box-shadow:0 -4px 16px rgba(0,0,0,.2);
 }
-@media (max-width:900px){ .sticky-mobile.show{display:block;} }
+.sticky-mobile-row{display:grid; grid-template-columns:1fr 1.4fr; gap:8px;}
+.sticky-mobile-row .btn{padding:12px 10px; font-size:13.5px; white-space:nowrap;}
+@media (max-width:900px){ .sticky-mobile{display:block;} }
 
 /* utility */
 .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
@@ -819,8 +822,11 @@ footer.site{background:var(--navy-950); color:var(--steel-300); padding:44px 0 c
   </div>
 </footer>
 
-<div id="sticky-mobile" class="sticky-mobile" aria-hidden="true">
-  <button class="btn btn-primary btn-block" onclick="scrollToForm('sticky_mobile')">Request FEA Project Review</button>
+<div id="sticky-mobile" class="sticky-mobile">
+  <div class="container sticky-mobile-row">
+    <a class="btn btn-outline" style="border-color:var(--steel-300); color:#fff;" href="tel:+14039105957" onclick="track('phone_click', {cta_source:'sticky_mobile'})">Call now</a>
+    <button class="btn btn-primary" onclick="scrollToForm('sticky_mobile')">Request guidance</button>
+  </div>
 </div>
 
 <script>
@@ -860,7 +866,6 @@ function scrollToForm(source, prefillRequirement){
     var heroBottom = heroEl.getBoundingClientRect().bottom;
     var past = heroBottom < 0;
     if(stickyD){ stickyD.classList.toggle('show', past); }
-    if(stickyM){ stickyM.classList.toggle('show', past); }
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
